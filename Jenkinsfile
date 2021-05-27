@@ -29,6 +29,16 @@ pipeline {
                 success {
                     junit '**/target/surefire-reports/TEST-*.xml'
                 }
+                failure {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    sh "exit 1"
+                    error "Failed, exiting now"
+                }
+                unstable {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    sh "exit 1"
+                    error "Unstable, exiting now"
+                }
             }
         }
         stage('Package') {
