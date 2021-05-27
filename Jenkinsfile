@@ -42,7 +42,7 @@ pipeline {
             post {
                 success {
                     archiveArtifacts 'target/*.jar'
-                    sh "cp target/*.jar /home/srvadmin/RepoArtifacts"
+                    sh "cp target/movieapp.jar /home/srvadmin/RepoArtifacts/`date +%Y%m%d-%H:%M:%S`_movieapp.jar"
                 }
             }
         }
