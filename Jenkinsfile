@@ -8,15 +8,16 @@ pipeline {
     }
 
     parameters {
-        string(name: 'BRANCH', defaultValue: 'master', description:'Gitbranch of the JavaProject')
+        string(name: 'GIT_URL', defaultValue:'https://github.com/matthcol/movieapijava2021.git')
+        string(name: 'GIT_BRANCH', defaultValue: 'master', description:'Gitbranch of the JavaProject')
     }
 
     stages {
-        stage('Build') {
+        stage('Compile') {
             steps {
                 // Get some code from a GitHub repository
-                git url: 'https://github.com/matthcol/movieapijava2021.git',
-                    branch: "${params.BRANCH}"
+                git url: "${params.GIT_URL}",
+                    branch: "${params.GIT_BRANCH}"
                 // Run Maven on a Unix agent.
                 sh "mvn clean compile"
                 // To run Maven on a Windows agent, use
@@ -38,6 +39,10 @@ pipeline {
             steps {
                 sh "mvn -DskipTests package"
             }
+            post {
+                success {
+                    archiveArtifacts 'target/*.jar'
+                }
         }
     }
 }
