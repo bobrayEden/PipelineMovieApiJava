@@ -21,23 +21,12 @@ pipeline {
         }
         stage ('Test') {
             steps {
-                sh "mvn -Dmaven.test.failure.ignore=true test"
+                sh "mvn test"
+
             }
             post {
-                // If Maven was able to run the tests, even if some of the test
-                // failed, record the test results
-                success {
+                always {
                     junit '**/target/surefire-reports/TEST-*.xml'
-                }
-                failure {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    sh "exit 1"
-                    error "Failed, exiting now"
-                }
-                unstable {
-                    junit '**/target/surefire-reports/TEST-*.xml'
-                    sh "exit 1"
-                    error "Unstable, exiting now"
                 }
             }
         }
