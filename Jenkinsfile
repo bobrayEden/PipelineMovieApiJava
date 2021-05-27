@@ -43,6 +43,7 @@ pipeline {
                 success {
                     archiveArtifacts 'target/*.jar'
                 }
+            }
         }
     }
 }
