@@ -27,7 +27,6 @@ pipeline {
         stage ('Test') {
             steps {
                 sh "mvn test"
-
             }
             post {
                 always {
@@ -42,7 +41,7 @@ pipeline {
             post {
                 success {
                     archiveArtifacts 'target/*.jar'
-                    sh "cp target/movieapp.jar /home/srvadmin/RepoArtifacts/`date +%Y%m%d-%H:%M:%S`_movieapp.jar"
+                    sh "cp target/movieapp.jar /home/srvadmin/RepoArtifacts/`date +%Y%m%d`_movieapp.jar"
                 }
             }
         }
